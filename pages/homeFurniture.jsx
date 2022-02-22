@@ -56,7 +56,6 @@ const HomeFurniture = () => {
   const handleSortChange = (event) => {
     setSort(event.target.value);
 
-    
 
   };
   return (

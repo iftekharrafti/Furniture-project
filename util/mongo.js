@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = `mongodb+srv://mydbuser1:06eSisrfDsG77zkF@cluster0.ts3db.mongodb.net/furns?retryWrites=true&w=majority`
+const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
   throw new Error(
