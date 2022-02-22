@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const HomeFurniture = () => {
   const styles = useStyles();
   const [sort, setSort] = useState("");
+  const [sortedProduct, setSortedProduct] = useState([]);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -56,10 +57,15 @@ const HomeFurniture = () => {
   const handleSortChange = (event) => {
     setSort(event.target.value);
 
-
   };
+
+  if(sort === 'priceLowHigh'){
+    const lowToHigh = products.sort((a,b) => a.prices[0] - b.prices[0])
+    setProducts(lowToHigh)
+  }
+
   return (
-    <Box>
+    <Box sx={{my:2}}>
       <Box className={styles.titleContainer}>
         <Typography variant="h4" className="title">
           Home Furniture
@@ -110,7 +116,7 @@ const HomeFurniture = () => {
 
         {/* <Box> */}
           <Grid container spacing={2}>
-              {products.map(product => <ProductCart key={product._id} product={product}/>)}
+              {products.map(product => <ProductCart key={product._id} product={product} />)}
           </Grid>
         {/* </Box> */}
       </Container>
