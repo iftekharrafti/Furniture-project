@@ -8,7 +8,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import QuickViewModal from "./QuickViewModal";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../redux/cartSlice";
+import { addProduct, addWishlistProduct, addCompareProduct } from "../redux/cartSlice";
 
 const ProductCart = ({ product }) => {
   const [items, setItems] = useState([]);
@@ -20,8 +20,16 @@ const ProductCart = ({ product }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleClick = () => {
+  const handleCartClick = () => {
     dispatch(addProduct({...product, price, quantity}))
+  }
+
+  const handleWishlistClick = () => {
+    dispatch(addWishlistProduct({...product}))
+  }
+
+  const handleCompareClick = () => {
+    dispatch(addCompareProduct({...product}))
   }
 
   return (
@@ -53,13 +61,15 @@ const ProductCart = ({ product }) => {
         >
           ${product.prices[0]}
         </Typography>
-        <Box className="productLove">
+        {/* Product Wishlist */}
+
+        <Box className="productLove" onClick={handleWishlistClick} title="Add to Wishlist">
           <FavoriteBorderIcon />
         </Box>
 
         {/* Product Quick View */}
 
-        <Box className="productQuick">
+        <Box className="productQuick" title="Quick View">
           <PreviewOutlinedIcon onClick={handleOpen} />
           <QuickViewModal
             handleClose={handleClose}
@@ -70,7 +80,7 @@ const ProductCart = ({ product }) => {
 
         {/* Product Compare */}
 
-        <Box className="productCompare">
+        <Box className="productCompare" onClick={handleCompareClick} title="Add to Compare">
           <CompareOutlinedIcon />
         </Box>
 
@@ -89,7 +99,7 @@ const ProductCart = ({ product }) => {
         {/* product Cart Button */}
 
         <Box className="productButton">
-          <Button className="productButtonDesc" onClick={handleClick}>
+          <Button className="productButtonDesc" onClick={handleCartClick}>
             <ShoppingCartIcon /> Add to Cart
           </Button>
         </Box>

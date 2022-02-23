@@ -141,7 +141,7 @@ const QuickViewModal = ({ handleClose, open, id }) => {
             <Grid item xs={12} md={6}>
               <Box sx={{ ml: 5, mb: 5 }}>
                 <Typography variant="body1" className="shortDesc">
-                  <b>SKU:</b>
+                  <b>SKU:</b> 
                 </Typography>
 
                 <Typography

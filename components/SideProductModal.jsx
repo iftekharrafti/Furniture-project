@@ -4,6 +4,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
+import { useDispatch } from "react-redux";
+import { removeProduct } from "../redux/cartSlice";
 
 const useStyles = makeStyles((theme) => ({
   top: {
@@ -32,15 +35,22 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#2F333A",
     },
   },
-  middleProduct:{
+  middleCart: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "80vh",
+    flexDirection: "column",
+  },
+  middleProduct: {
     display: "grid",
     gridTemplateColumns: "150px 200px 50px",
     width: "300px",
     position: "relative",
-    margin:'20px 0'
+    margin: "20px 0",
   },
-  middleTitle:{
-    fontSize:"16px"
+  middleTitle: {
+    fontSize: "16px",
   },
   bottomDesc: {
     fontSize: "20px",
@@ -58,8 +68,14 @@ const useStyles = makeStyles((theme) => ({
 
 const SideProductModal = ({ drawer, toggleDrawer }) => {
   const styles = useStyles();
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.cartProducts);
   const total = useSelector((state) => state.cart.total);
+
+  const handleRemove = (id) => {
+    dispatch(removeProduct(id));
+  };
+
   return (
     <Box>
       <Drawer
@@ -86,19 +102,43 @@ const SideProductModal = ({ drawer, toggleDrawer }) => {
           <Divider />
 
           {/* Middle */}
-          {products.map((product) => (
-            <Box key={product._id} className={styles.middleProduct}>
-                <Box>
-                    <Image src={product.img} alt="" width="140" height="120" objectFit="cover" />
-                </Box>
-                <Box sx={{ml:1.5}}>
-                    <Typography variant="h5" className={`title3 ${styles.middleTitle}`}> {product.title}</Typography>
-                </Box>
-                <Box sx={{ml:1.5}}>
-                    <CloseIcon />
-                </Box>
+          {products.length === 0 ? (
+            <Box className={styles.middleCart}>
+              <LocalMallIcon
+                sx={{ color: "#FF7004", fontSize: "70px", mb: 1 }}
+              />
+              <Typography variant="h5">There are no products!</Typography>
             </Box>
-          ))}
+          ) : (
+            products.map((product) => (
+              <Box key={product._id} className={styles.middleProduct}>
+                <Box>
+                  <Image
+                    src={product.img}
+                    alt=""
+                    width="140"
+                    height="120"
+                    objectFit="cover"
+                  />
+                </Box>
+                <Box sx={{ ml: 1.5 }}>
+                  <Typography
+                    variant="h5"
+                    className={`title3 ${styles.middleTitle}`}
+                  >
+                    {" "}
+                    {product.title}
+                  </Typography>
+                </Box>
+                <Box sx={{ ml: 1.5 }}>
+                  <CloseIcon
+                    onClick={() => handleRemove(product._id)}
+                    sx={{ cursor: "pointer" }}
+                  />
+                </Box>
+              </Box>
+            ))
+          )}
 
           {/* Bottom */}
           <Box className={styles.bottom}>

@@ -1,14 +1,16 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
   boxLeft: {
     background: "url('/img/saleFurniture.png')",
     backgroundSize: "cover",
     objectFit: "cover",
+    cursor: "pointer",
   },
-  boxDesc:{
+  boxDesc: {
     width: "100%",
     height: "45vh",
     display: "flex",
@@ -21,41 +23,50 @@ const useStyles = makeStyles((theme) => ({
     background: "url('/img/officeChair.png')",
     backgroundSize: "cover",
     objectFit: "cover",
+    cursor: "pointer",
   },
-  boxRightDesc:{
+  boxRightDesc: {
     alignItems: "flex-start",
-  }
+  },
 }));
 
 const SaleFurniture = () => {
   const styles = useStyles();
   return (
-    <Container sx={{mb: 5}}>
+    <Container sx={{ mb: 5 }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <Box className={styles.boxLeft}>
-            <Box className={styles.boxDesc}>
-              <Typography className="title3" variant="h5">
-                Sale Furniture <br /> For Summer
-              </Typography>
-              <Typography variant="p" className="desc">
-                Great Dicounts Here
-              </Typography>
+        {/* Home Furniture */}
+
+        <Link href="/homeFurniture" passHref>
+          <Grid item xs={12} md={6}>
+            <Box className={styles.boxLeft}>
+              <Box className={styles.boxDesc}>
+                <Typography className="title3" variant="h5">
+                  Sale Furniture <br /> For Summer
+                </Typography>
+                <Typography variant="p" className="desc">
+                  Great Dicounts Here
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Box className={styles.boxRight}>
-            <Box className={`${styles.boxDesc} ${styles.boxRightDesc}`}>
-              <Typography className="title3" variant="h5">
-                Office Chair <br /> For Best Offer
-              </Typography>
-              <Typography variant="p" className="desc">
-                Great Dicounts Here
-              </Typography>
+          </Grid>
+        </Link>
+
+        {/* Office Chair */}
+        <Link href="/officeFurniture" passHref>
+          <Grid item xs={12} md={6}>
+            <Box className={styles.boxRight}>
+              <Box className={`${styles.boxDesc} ${styles.boxRightDesc}`}>
+                <Typography className="title3" variant="h5">
+                  Office Chair <br /> For Best Offer
+                </Typography>
+                <Typography variant="p" className="desc">
+                  Great Dicounts Here
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        </Grid>
+          </Grid>
+        </Link>
       </Grid>
     </Container>
   );

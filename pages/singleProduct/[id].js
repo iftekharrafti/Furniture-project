@@ -139,6 +139,7 @@ const SingleProduct = ({product}) => {
       </Box>
       <Container>
         <Grid container spacing={2}>
+          {/* Left Part Swipper Slidder */}
           <Grid item xs={12} sm={12} md={4}>
             <Swiper
               style={{

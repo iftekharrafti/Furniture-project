@@ -16,7 +16,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { makeStyles } from "@material-ui/core/styles";
-import { Badge } from "@mui/material";
+import { Badge, Divider } from "@mui/material";
 import { useSelector } from 'react-redux'
 import SideProductModal from '../components/SideProductModal';
 
@@ -211,7 +211,7 @@ const ResponsiveAppBar = () => {
               <SearchIcon></SearchIcon>
               <Tooltip
                 style={{ margin: "0 10px 0 10px" }}
-                title="Open settings"
+                title="Open"
               >
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <PersonOutlineIcon sx={{ color: "#fff" }}></PersonOutlineIcon>
@@ -248,8 +248,10 @@ const ResponsiveAppBar = () => {
                       variant="h5"
                     >
                       {person.name}
+                      <Divider sx={{width:"100%", mt:0.5}} />
                     </Typography>
                   </Link>
+                  
                 </MenuItem>
               ))}
             </Menu>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Box, Button, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from 'react-redux'
+import SideProductModal from "./SideProductModal";
 
 const useStyles = makeStyles((theme) => ({
   sideCart: {
@@ -42,17 +43,25 @@ const useStyles = makeStyles((theme) => ({
 
 const SideCart = () => {
   const styles = useStyles();
+  const [drawer, setDrawer] = useState(false);
+
   const quantity = useSelector(state => state.cart.quantity) 
   const total = useSelector(state => state.cart.total) 
+
+  const toggleDrawer = (open) => (event) => {
+    setDrawer(open)
+  }
+
   return (
     <Box className={styles.sideCart}>
-      <Box className={styles.sideCartContainer}>
+      <Box className={styles.sideCartContainer} onClick={toggleDrawer(true)}>
         <ShoppingCartIcon sx={{color:'rgb(255, 112, 4)'}}></ShoppingCartIcon>
         <Typography variant="p" className={`desc ${styles.cartDesc}`}>
           {quantity} items
         </Typography>
         <Button className={styles.button}>${total}</Button>
       </Box>
+      <SideProductModal toggleDrawer={toggleDrawer} drawer={drawer} />
     </Box>
   );
 };
