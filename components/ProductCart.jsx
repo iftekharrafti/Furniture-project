@@ -13,13 +13,15 @@ import { addProduct } from "../redux/cartSlice";
 const ProductCart = ({ product }) => {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
+  const [price, setPrice] = useState(product.prices[0]);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleClick = () => {
-    dispatch(addProduct({...product}))
+    dispatch(addProduct({...product, price, quantity}))
   }
 
   return (
