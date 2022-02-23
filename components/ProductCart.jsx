@@ -5,16 +5,22 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PreviewOutlinedIcon from "@mui/icons-material/PreviewOutlined";
 import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import QuickViewModal from "./QuickViewModal";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../redux/cartSlice";
 
 const ProductCart = ({ product }) => {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleClick = () => {
+    dispatch(addProduct({...product}))
+  }
 
   return (
     <Grid item xs={6} md={3}>
@@ -78,10 +84,10 @@ const ProductCart = ({ product }) => {
           </Typography>
         </Box>
 
-        {/* product Button */}
+        {/* product Cart Button */}
 
         <Box className="productButton">
-          <Button className="productButtonDesc">
+          <Button className="productButtonDesc" onClick={handleClick}>
             <ShoppingCartIcon /> Add to Cart
           </Button>
         </Box>

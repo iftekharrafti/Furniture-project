@@ -118,7 +118,6 @@ const SingleProduct = ({product}) => {
     dispatch(addProduct({...product, price, quantity}))
     setAvailability(availability - quantity)
   }
-  // const newAvailable = useSelector(state => state.cart.quantity)
 
   return (
     <Box>
@@ -272,7 +271,6 @@ const SingleProduct = ({product}) => {
                   <input
                       onChange={(e) => setQuantity(e.target.value)}
                       type="number"
-                      // defaultValue={quantity}
                       value={quantity}
                       className={`inputNumber ${styles.inputCount}`}
                     />
