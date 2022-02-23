@@ -7,37 +7,41 @@ import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import QuickViewModal from "./QuickViewModal";
+import Link from "next/link";
 
-const ProductCart = ({product}) => {
-  const [items, setItems] = useState([])
+const ProductCart = ({ product }) => {
+  const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
-  
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   return (
     <Grid item xs={6} md={3}>
-      
       <Box className="productContainer">
-        <Image
-          className="productImg"
-          src={product.img}
-          alt=""
-          width="250px"
-          height="280px"
-        />
+        <Link href={`/singleProduct/${product._id}`}>
+          <Image
+            style={{cursor: "pointer"}}
+            className="productImg"
+            src={product.img}
+            alt=""
+            width="250px"
+            height="280px"
+          />
+        </Link>
 
         {/* Product Title */}
 
-        <Typography className="productTitle" variant="subtitle1">
-          {product.title}
-        </Typography>
-        
+        <Link href={`/singleProduct/${product._id}`}>
+          <Typography className="productTitle" variant="subtitle1">
+            {product.title}
+          </Typography>
+        </Link>
+
         <Typography
           className="desc"
           variant="subtitle2"
-          sx={{ textAlign: "center", fontWeight: 500 }}
+          sx={{ textAlign: "center", fontWeight: 500 }} 
         >
           ${product.prices[0]}
         </Typography>
@@ -49,7 +53,11 @@ const ProductCart = ({product}) => {
 
         <Box className="productQuick">
           <PreviewOutlinedIcon onClick={handleOpen} />
-          <QuickViewModal handleClose={handleClose} open={open} id={product._id} />
+          <QuickViewModal
+            handleClose={handleClose}
+            open={open}
+            id={product._id}
+          />
         </Box>
 
         {/* Product Compare */}
@@ -61,19 +69,22 @@ const ProductCart = ({product}) => {
         {/* Product Discout */}
 
         <Box className="productDiscount">
-        <Typography className="shortDesc" variant="body2" style={{color:'#fff'}}>
-          -{product.discount}%
-        </Typography>
+          <Typography
+            className="shortDesc"
+            variant="body2"
+            style={{ color: "#fff" }}
+          >
+            -{product.discount}%
+          </Typography>
         </Box>
 
-          {/* product Button */}
+        {/* product Button */}
 
         <Box className="productButton">
           <Button className="productButtonDesc">
             <ShoppingCartIcon /> Add to Cart
           </Button>
         </Box>
-
       </Box>
     </Grid>
   );

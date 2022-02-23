@@ -21,6 +21,8 @@ import CompareIcon from "@mui/icons-material/Compare";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import PinterestIcon from "@mui/icons-material/Pinterest";
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../../redux/cartSlice';
 
 // Import Swiper styles
 import "swiper/css";
@@ -31,6 +33,7 @@ import "swiper/css/thumbs";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import Image from "next/image";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   titleContainer: {
@@ -56,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
   inputCount: {
     width: "90px",
     border: "1px solid rgb(255, 112, 4)",
+    padding:'5px',
     "&:focus": {
       outline: "none",
     },
@@ -101,20 +105,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SingleProduct = () => {
+const SingleProduct = ({product}) => {
   const styles = useStyles();
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
-
-  const handleColorChange = (event) => {
-    setSize(event.target.value);
-  };
-
-  const handleSizeChange = (event) => {
-    setColor(event.target.value);
-  };
-
+  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(product.prices[0]);
+  const [availability, setAvailability] = useState(product.availability)
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(addProduct({...product, price, quantity}))
+    setAvailability(availability - quantity)
+  }
+  // const newAvailable = useSelector(state => state.cart.quantity)
+
   return (
     <Box>
       <Box className={styles.titleContainer}>
@@ -236,7 +241,7 @@ const SingleProduct = () => {
           <Grid item xs={12} sm={12} md={8}>
             <Box sx={{ ml: 5, mb: 5 }}>
               <Typography variant="body1" className="shortDesc">
-                <b>SKU:</b>GXW
+                <b>SKU:</b>{product.sku[0]}
               </Typography>
 
               <Typography
@@ -244,99 +249,36 @@ const SingleProduct = () => {
                 variant="body1"
                 className="shortDesc"
               >
-                <b>AVAILABILITY:</b>9 in Stock
+                <b>AVAILABILITY:</b>{availability} in Stock
               </Typography>
 
               <Typography variant="h4" className="title3">
-                Variable Product
+                {product.title}
               </Typography>
 
               <Typography sx={{ my: 1 }} variant="h5" className="">
-                $69.0
+                ${product.prices[0]}
               </Typography>
 
-              <Typography sx={{ mb: 2 }} variant="body1" className="shortDesc">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humor, or randomized words which don&apos;t look even
-                slightly believable. If you are going to use a passage of
+              <Typography sx={{ mb: 3, mt:1 }} variant="body1" className="shortDesc">
+                {product.desc}
               </Typography>
-
-              {/* Color Option */}
-
-              <Box className={styles.color}>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                  Color
-                </InputLabel>
-                <FormControl sx={{ minWidth: 400 }}>
-                  <Select
-                    value={color}
-                    onChange={handleColorChange}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem value="">Gray</MenuItem>
-                    <MenuItem value={10}>Green</MenuItem>
-                    <MenuItem value={11}>Chocolet</MenuItem>
-                    <MenuItem value={12}>Blue</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-
-              {/* Select Size */}
-
-              <Box sx={{ my: 2 }} className={styles.size}>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                  Size
-                </InputLabel>
-                <FormControl sx={{ minWidth: 400 }}>
-                  <Select
-                    value={size}
-                    onChange={handleSizeChange}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem value="">Semi Double</MenuItem>
-                    <MenuItem value={10}>Double</MenuItem>
-                    <MenuItem value={11}>Single</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-
-              {/* Select Material */}
-
-              <Box className={styles.material}>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                  Material
-                </InputLabel>
-                <FormControl sx={{ minWidth: 400 }}>
-                  <Select
-                    value={size}
-                    onChange={handleSizeChange}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem value="">Wood</MenuItem>
-                    <MenuItem value={10}>Metal</MenuItem>
-                    <MenuItem value={11}>Leather</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
 
               {/* Add to cart */}
 
               <Box className={styles.addToCart}>
                 <Box className={styles.inputGroup}>
-                  <button className={styles.button}>-</button>
+                  <button className={styles.button} onClick={() => setQuantity(quantity - 1)}>-</button>
                   <input
-                    className={styles.inputCount}
-                    type="number"
-                    name=""
-                    id=""
-                  />
-                  <button className={styles.button}>+</button>
+                      onChange={(e) => setQuantity(e.target.value)}
+                      type="number"
+                      // defaultValue={quantity}
+                      value={quantity}
+                      className={`inputNumber ${styles.inputCount}`}
+                    />
+                  <button className={styles.button} onClick={() => setQuantity(quantity + 1)}>+</button>
                 </Box>
-                <Button className="btn">Add To Cart</Button>
+                <Button className="btn" onClick={handleClick}>Add To Cart</Button>
               </Box>
 
               {/* Wishlist and compare */}
@@ -380,3 +322,14 @@ const SingleProduct = () => {
 };
 
 export default SingleProduct;
+
+export async function getServerSideProps({params}) {
+
+  const res = await axios.get(`http://localhost:3000/api/product/${params.id}`)
+
+  return {
+    props: {
+      product: res.data
+    },
+  }
+}
