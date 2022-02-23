@@ -16,6 +16,9 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { makeStyles } from "@material-ui/core/styles";
+import { Badge } from "@mui/material";
+import { useSelector } from 'react-redux'
+import SideProductModal from '../components/SideProductModal';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -30,7 +33,13 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [drawer, setDrawer] = React.useState(false);
   const styles = useStyles();
+  const quantity = useSelector(state => state.cart.quantity)
+
+  const toggleDrawer = (open) => (event) => {
+    setDrawer(open)
+  }
 
   const pages = [
     {
@@ -192,14 +201,28 @@ const ResponsiveAppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Box style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <SearchIcon></SearchIcon>
-              <Tooltip style={{margin:'0 10px 0 10px'}} title="Open settings">
+              <Tooltip
+                style={{ margin: "0 10px 0 10px" }}
+                title="Open settings"
+              >
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <PersonOutlineIcon sx={{color:'#fff'}}></PersonOutlineIcon>
+                  <PersonOutlineIcon sx={{ color: "#fff" }}></PersonOutlineIcon>
                 </IconButton>
               </Tooltip>
-              <ShoppingBagIcon></ShoppingBagIcon>
+
+              {/* Shopping cart Icon */}
+              <Badge badgeContent={quantity} color="secondary" onClick={toggleDrawer(true)} sx={{cursor: "pointer" }}>
+                <ShoppingBagIcon color="action" sx={{color:'#fff'}} />
+              </Badge>
+              <SideProductModal toggleDrawer={toggleDrawer} drawer={drawer} />
             </Box>
             <Menu
               sx={{ mt: "45px" }}
