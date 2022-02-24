@@ -1,37 +1,16 @@
 import { Box, Breadcrumbs, Container, Grid, Typography } from "@mui/material";
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Image from "next/image";
 import Link from "next/link";
-
-const useStyles = makeStyles((theme) => ({
-  titleContainer: {
-    padding: "30px 0",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F4F5F8",
-  },
-}));
+import TitleContainer from "../components/TitleContainer";
 
 const About = () => {
-  const styles = useStyles();
   return (
     <Box>
-      <Box className={styles.titleContainer}>
-        <Typography variant="h4" className="title">
-          ABOUT US
-        </Typography> 
-        <Breadcrumbs  aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/">
-            Home
-          </Link>
-          <Link underline="hover" color="inherit" href="/about">
-            About
-          </Link>
-        </Breadcrumbs>
-      </Box>
+      {/* Title Container */}
+      <TitleContainer title="About Us" name1="Home" link1="/" name3="About" />
+      
+        {/* About Details */}
       <Container>
         <Box>
           <Typography variant="h4" className="title3" sx={{ py: 4 }}>

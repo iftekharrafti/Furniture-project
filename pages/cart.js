@@ -24,14 +24,6 @@ import LocalMallIcon from "@mui/icons-material/LocalMall";
 import TitleContainer from "../components/TitleContainer";
 
 const useStyles = makeStyles((theme) => ({
-  titleContainer: {
-    padding: "30px 0",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F4F5F8",
-  },
   button: {
     backgroundColor: "#FF7004",
     color: "#FFFFFF",
@@ -72,9 +64,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Wishlist = () => {
+const Cart = () => {
   const styles = useStyles();
-  const products = useSelector((state) => state.cart.wishlistProducts);
+  const products = useSelector((state) => state.cart.cartProducts);
 
   const [price, setPrice] = useState();
   const [quantity, setQuantity] = useState(1);
@@ -92,9 +84,9 @@ const Wishlist = () => {
   return (
     <Box>
       {/* Title Container */}
-      <TitleContainer title="Wishlist" name1="Home" link1="/" name3="Wishlist" />
+      <TitleContainer title="Cart" name1="Home" link1="/" name3="Cart" />
 
-      {/* Wishlist Cart Table */}
+      {/* Cart Table */}
       <Box sx={{ py: 8 }}>
         <Container>
           {products.length === 0 ? (
@@ -103,7 +95,7 @@ const Wishlist = () => {
               <LocalMallIcon
                 sx={{ color: "#FF7004", fontSize: "90px", mb: 1 }}
               />
-              <Typography variant="h5">There are no products in your wishlist!</Typography>
+              <Typography variant="h5">There are no products in your cart!</Typography>
             </Box>
           ) : (
             //   Table Details
@@ -115,7 +107,8 @@ const Wishlist = () => {
                     <StyledTableCell>IMAGE</StyledTableCell>
                     <StyledTableCell align="left">PRODUCT NAME</StyledTableCell>
                     <StyledTableCell align="left">UNTIL PRICE</StyledTableCell>
-                    <StyledTableCell align="left">ADD TO CART</StyledTableCell>
+                    <StyledTableCell align="left">QTY</StyledTableCell>
+                    <StyledTableCell align="left">SUBTOTAL</StyledTableCell>
                     <StyledTableCell align="left">ACTION</StyledTableCell>
                   </TableRow>
                 </TableHead>
@@ -134,6 +127,9 @@ const Wishlist = () => {
                       </StyledTableCell>
                       <StyledTableCell align="left">
                         {product.title}
+                      </StyledTableCell>
+                      <StyledTableCell align="left">
+                        ${product.prices[0]}
                       </StyledTableCell>
                       <StyledTableCell align="left">
                         ${product.prices[0]}
@@ -165,4 +161,4 @@ const Wishlist = () => {
   );
 };
 
-export default Wishlist;
+export default Cart;

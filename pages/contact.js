@@ -2,16 +2,9 @@ import { Box, Breadcrumbs, Container, Grid, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import TitleContainer from "../components/TitleContainer";
 
 const useStyles = makeStyles((theme) => ({
-  titleContainer: {
-    padding: "30px 0",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F4F5F8",
-  },
   contactLeft: {
     backgroundColor: "#F5F5F5",
     padding: "50px 30px",
@@ -37,19 +30,7 @@ const Contact = () => {
   return (
     <Box>
       {/* Contact Heading */}
-      <Box className={styles.titleContainer}>
-        <Typography variant="h4" className="title">
-          CONTACT US
-        </Typography>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/">
-            Home
-          </Link>
-          <Link underline="hover" color="inherit" href="/about">
-            Contact
-          </Link>
-        </Breadcrumbs>
-      </Box>
+      <TitleContainer title="Contact Us" name1="Home" link1="/" name3="Contact" />
 
       {/* Contact Map */}
       <Container>

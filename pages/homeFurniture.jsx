@@ -12,16 +12,9 @@ import {
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ProductCart from "../components/ProductCart";
+import TitleContainer from "../components/TitleContainer";
 
 const useStyles = makeStyles((theme) => ({
-  titleContainer: {
-    padding: "30px 0",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F4F5F8",
-  },
   sortContainer: {
     display: "flex",
     justifyContent: "space-between",
@@ -65,23 +58,10 @@ const HomeFurniture = () => {
   }
 
   return (
-    <Box sx={{my:2}}>
-      <Box className={styles.titleContainer}>
-        <Typography variant="h4" className="title">
-          Home Furniture
-        </Typography>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" href="/">
-            Home
-          </Link>
-          <Link underline="hover" color="inherit" href="/collection">
-            Collection
-          </Link>
-          <Link underline="hover" color="inherit" href="/collection">
-            Home Collection
-          </Link>
-        </Breadcrumbs>
-      </Box>
+    <Box>
+      {/* Title Container */}
+      <TitleContainer title="Home Furniture" name1="Home" link1="/" name2="Collection" link2="/" name3="Home Furniture" />
+
       {/* Product count and product sort */}
       <Container>
         <Box className={styles.sortContainer}>
