@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     Container,
     Grid,
     Input,
@@ -39,6 +40,26 @@ import {
         marginLeft: "15px",
       },
     },
+    input:{
+      border:"1px solid rgb(67, 71, 78)",
+      fontSize:"14px",
+      background:"transparent",
+      borderRadius: 0,
+      padding:"10px",
+      color:"#fff",
+      "$:focus":{
+        border:"1px solid rgb(67, 71, 78)",
+        boxShadow:"none"
+      }
+    },
+    button:{
+      backgroundColor: "rgb(255, 112, 4)",
+      marginTop: "15px",
+      "&:hover":{
+        backgroundColor:"#212121",
+        color:"#fff"
+      }
+    }
   }));
   
   const FooterTop = () => {
@@ -47,6 +68,9 @@ import {
       <Box className={styles.footerTop}>
         <Container>
           <Grid container spacing={2}>
+
+            {/* Footer About us */}
+
             <Grid item xs={6} md={3} sx={{ pr: 4 }}>
               <Typography className={styles.title} variant="subtitle2">
                 ABOUT US
@@ -63,6 +87,9 @@ import {
                 <YouTubeIcon></YouTubeIcon>
               </Box>
             </Grid>
+
+            {/* Footer Information */}
+
             <Grid item xs={6} md={3}>
               <Typography className={styles.title} variant="subtitle2">
                 INFORMATION
@@ -85,6 +112,9 @@ import {
                 </ListItem>
               </List>
             </Grid>
+
+              {/* Footer My Account */}
+
             <Grid item xs={6} md={3}>
               <Typography className={styles.title} variant="subtitle2">
                 MY ACCOUNT
@@ -107,13 +137,16 @@ import {
                 </ListItem>
               </List>
             </Grid>
+
+            {/* Footer NewsLetter */}
+
             <Grid item xs={6} md={3}>
               <Typography className={styles.title} variant="subtitle2">
                 NEWSLETTER
               </Typography>
               <form action="">
-                <Input type="text" placeholder="Enter E-Main Address" />
-                <Input type="Subscribe" value="Subscribe" />
+                <Input className={styles.input} type="text" placeholder="Enter E-Main Address" />
+                <Button className={`btn ${styles.button}`}>Subscribe</Button>
               </form>
             </Grid>
           </Grid>

@@ -163,7 +163,7 @@ const QuickViewModal = ({ handleClose, open, id }) => {
                 </Typography>
 
                 <Typography sx={{ my: 1 }} variant="h5" className="">
-                  $
+                  $ 
                 </Typography>
 
                 <Typography

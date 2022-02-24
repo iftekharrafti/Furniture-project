@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "flex-start",
+    cursor: "pointer",
   },
   sideCartContainer:{
     width: "80px",
@@ -23,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     padding:'10px 0',
-    borderRadius: '10px 0 0 10px'
+    borderRadius: '10px 0 0 10px',
+    boxShadow: "rgb(0 0 0 / 75%) 0px 0px 16px -1px"
   },
   cartDesc:{
     color: "white",
