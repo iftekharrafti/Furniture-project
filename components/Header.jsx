@@ -17,8 +17,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { makeStyles } from "@material-ui/core/styles";
 import { Badge, Divider } from "@mui/material";
-import { useSelector } from 'react-redux'
-import SideProductModal from '../components/SideProductModal';
+import { useSelector } from "react-redux";
+import SideProductModal from "../components/SideProductModal";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -35,11 +35,11 @@ const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [drawer, setDrawer] = React.useState(false);
   const styles = useStyles();
-  const quantity = useSelector(state => state.cart.quantity)
+  const quantity = useSelector((state) => state.cart.quantity);
 
   const toggleDrawer = (open) => (event) => {
-    setDrawer(open)
-  }
+    setDrawer(open);
+  };
 
   const pages = [
     {
@@ -121,7 +121,11 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            <Image src="/img/logo.png" alt="" width="150" height="45" />
+            {/* Header Logo */}
+
+            <Link href="/" passHref>
+              <Image src="/img/logo.png" alt="" width="150" height="45" />
+            </Link>
           </Typography>
 
           <Box
@@ -209,18 +213,20 @@ const ResponsiveAppBar = () => {
               }}
             >
               <SearchIcon></SearchIcon>
-              <Tooltip
-                style={{ margin: "0 10px 0 10px" }}
-                title="Open"
-              >
+              <Tooltip style={{ margin: "0 10px 0 10px" }} title="Open">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <PersonOutlineIcon sx={{ color: "#fff" }}></PersonOutlineIcon>
                 </IconButton>
               </Tooltip>
 
               {/* Shopping cart Icon */}
-              <Badge badgeContent={quantity} color="secondary" onClick={toggleDrawer(true)} sx={{cursor: "pointer" }}>
-                <ShoppingBagIcon color="action" sx={{color:'#fff'}} />
+              <Badge
+                badgeContent={quantity}
+                color="secondary"
+                onClick={toggleDrawer(true)}
+                sx={{ cursor: "pointer" }}
+              >
+                <ShoppingBagIcon color="action" sx={{ color: "#fff" }} />
               </Badge>
               <SideProductModal toggleDrawer={toggleDrawer} drawer={drawer} />
             </Box>
@@ -240,6 +246,7 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              {/* Right Person Icon */}
               {persons.map((person) => (
                 <MenuItem key={person.name} onClick={handleCloseNavMenu}>
                   <Link href={person.href} passHref>
@@ -248,10 +255,9 @@ const ResponsiveAppBar = () => {
                       variant="h5"
                     >
                       {person.name}
-                      <Divider sx={{width:"100%", mt:0.5}} />
+                      <Divider sx={{ width: "100%", mt: 0.5 }} />
                     </Typography>
                   </Link>
-                  
                 </MenuItem>
               ))}
             </Menu>

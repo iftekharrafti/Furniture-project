@@ -57,7 +57,7 @@ const Blogs = () => {
         <Container>
           <Grid container spacing={2}>
             {blogs.map((blog) => (
-              <Grid item xs={6} md={4} key={blog._id}>
+              <Grid item xs={12} md={4} key={blog._id}>
                 <Card sx={{ maxWidth: 345 }} className={styles.newsCard}>
                   <CardMedia
                     component="img"
