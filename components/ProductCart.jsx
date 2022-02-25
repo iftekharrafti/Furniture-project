@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addProduct, addWishlistProduct, addCompareProduct } from "../redux/cartSlice";
 
-const ProductCart = ({ product }) => {
+const ProductCart = ({ product, sortProduct }) => {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [price, setPrice] = useState(product.prices[0]);

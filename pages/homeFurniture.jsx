@@ -35,6 +35,7 @@ const HomeFurniture = () => {
   const [sort, setSort] = useState("");
   const [sortedProduct, setSortedProduct] = useState([]);
   const [products, setProducts] = useState([]);
+  const [sortTrue, setSortTrue] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/product")
@@ -44,18 +45,47 @@ const HomeFurniture = () => {
           (product) => product.category === "bedRoom" || product.category === "living" || product.category === "dining"
         );
         setProducts(homeOffice);
+        console.log('home office',homeOffice)
       });
   }, []);
 
   const handleSortChange = (event) => {
     setSort(event.target.value);
-
+    
   };
 
-  if(sort === 'priceLowHigh'){
-    const lowToHigh = products.sort((a,b) => a.prices[0] - b.prices[0])
-    setProducts(lowToHigh)
+  // Price High To Low Converting
+  if(sortedProduct <= 0 ) {
+    if(sort === 'priceHighLow' && sortedProduct <= 0){
+      const highToLow = products.sort((a,b) => b.prices[0] - a.prices[0])
+      setSortedProduct(highToLow)
+      setSortTrue(true)
+    }
+    else if(sort === 'priceLowHigh' && sortedProduct <= 0){
+        const lowToHigh = products.sort((a,b) => a.prices[0] - b.prices[0])
+      setSortedProduct(lowToHigh)
+      setSortTrue(true)
+    }
   }
+
+  if(sortTrue){
+    console.log('sorted')
+    setSortedProduct([])
+    if(sort === 'priceHighLow' && sortedProduct <= 0){
+      const highToLow = products.sort((a,b) => b.prices[0] - a.prices[0])
+      setSortedProduct(highToLow)
+      setSortTrue(false)
+    }
+    else if(sort === 'priceLowHigh' && sortedProduct <= 0){
+      const lowToHigh = products.sort((a,b) => a.prices[0] - b.prices[0])
+    setSortedProduct(lowToHigh)
+    setSortTrue(false)
+  }
+  
+  }
+
+
+  
 
   return (
     <Box>
@@ -95,9 +125,16 @@ const HomeFurniture = () => {
         </Box>
 
         {/* <Box> */}
-          <Grid container spacing={2}>
+          {/* <Grid container spacing={2}>
               {products.map(product => <ProductCart key={product._id} product={product} />)}
+          </Grid> */}
+          {
+            sortedProduct.length <= 0 ? <Grid container spacing={2}>
+            {products.map(product => <ProductCart key={product._id} product={product} />)} 
+        </Grid> : <Grid container spacing={2}>
+              {sortedProduct.map(product => <ProductCart key={product._id} product={product} />)}
           </Grid>
+          }
         {/* </Box> */}
       </Container>
     </Box>
