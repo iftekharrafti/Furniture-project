@@ -47,7 +47,21 @@ const HomeFurniture = () => {
         setProducts(homeOffice);
         console.log('home office',homeOffice)
       });
-  }, []);
+      if(sortTrue){
+        setSortedProduct([])
+        if(sort === 'priceHighLow' && sortedProduct <= 0){
+          const highToLow = products.sort((a,b) => b.prices[0] - a.prices[0])
+          setSortedProduct(highToLow)
+          setSortTrue(false)
+        }
+        else if(sort === 'priceLowHigh' && sortedProduct <= 0){
+          const lowToHigh = products.sort((a,b) => a.prices[0] - b.prices[0])
+        setSortedProduct(lowToHigh)
+        setSortTrue(false)
+      }
+      
+      }
+  }, [products]);
 
   const handleSortChange = (event) => {
     setSort(event.target.value);
@@ -68,21 +82,7 @@ const HomeFurniture = () => {
     }
   }
 
-  if(sortTrue){
-    console.log('sorted')
-    setSortedProduct([])
-    if(sort === 'priceHighLow' && sortedProduct <= 0){
-      const highToLow = products.sort((a,b) => b.prices[0] - a.prices[0])
-      setSortedProduct(highToLow)
-      setSortTrue(false)
-    }
-    else if(sort === 'priceLowHigh' && sortedProduct <= 0){
-      const lowToHigh = products.sort((a,b) => a.prices[0] - b.prices[0])
-    setSortedProduct(lowToHigh)
-    setSortTrue(false)
-  }
-  
-  }
+
 
 
   
