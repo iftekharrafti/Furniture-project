@@ -4,7 +4,6 @@ import {
   Box,
   Breadcrumbs,
   Container,
-  Link,
   TableContainer,
   TableHead,
   TableRow,
@@ -22,6 +21,8 @@ import Image from "next/image";
 import { addProduct, removeWishlistProduct } from "../redux/cartSlice";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import TitleContainer from "../components/TitleContainer";
+import EditIcon from '@mui/icons-material/Edit';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -39,6 +40,26 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
+  },
+  addToCart: {
+    display: "flex",
+    alignItems: "center",
+    margin: "20px 0",
+    width:"100px"
+  },
+  inputGroup: {
+    border: "1px solid #F3F4F6",
+    width: "100px",
+    display: "flex",
+    marginRight: "15px",
+  },
+  inputCount: {
+    width: "50px",
+    border: "1px solid #F3F4F6",
+    padding:'5px',
+    "&:focus": {
+      outline: "none",
+    },
   },
 }));
 
@@ -67,6 +88,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Cart = () => {
   const styles = useStyles();
   const products = useSelector((state) => state.cart.cartProducts);
+  const total = useSelector((state) => state.cart.total);
 
   const [price, setPrice] = useState();
   const [quantity, setQuantity] = useState(1);
@@ -95,7 +117,9 @@ const Cart = () => {
               <LocalMallIcon
                 sx={{ color: "#FF7004", fontSize: "90px", mb: 1 }}
               />
-              <Typography variant="h5">There are no products in your cart!</Typography>
+              <Typography variant="h5">
+                There are no products in your cart!
+              </Typography>
             </Box>
           ) : (
             //   Table Details
@@ -117,6 +141,7 @@ const Cart = () => {
                   <TableBody key={product._id}>
                     <StyledTableRow>
                       <StyledTableCell component="th" scope="row">
+                        {/* Image */}
                         <Image
                           src={product.img}
                           alt=""
@@ -125,6 +150,7 @@ const Cart = () => {
                           objectFit="cover"
                         />
                       </StyledTableCell>
+                      {/* Title */}
                       <StyledTableCell align="left">
                         {product.title}
                       </StyledTableCell>
@@ -132,22 +158,41 @@ const Cart = () => {
                         ${product.prices[0]}
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        ${product.prices[0]}
+                        <Box className={styles.addToCart}>
+                          <Box className={styles.inputGroup}>
+                            <button
+                              className={styles.button}
+                              onClick={() => setQuantity(quantity - 1)}
+                            >
+                              -
+                            </button>
+                            <input
+                              onChange={(e) => setQuantity(e.target.value)}
+                              type="number"
+                              value={quantity}
+                              className={`inputNumber ${styles.inputCount}`}
+                            />
+                            <button
+                              className={styles.button}
+                              onClick={() => setQuantity(quantity + 1)}
+                            >
+                              +
+                            </button>
+                          </Box>
+                        </Box>
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        <Button
-                          className={styles.button}
-                          onClick={() =>
-                            handleCartClick(product.prices[0], product)
-                          }
-                        >
-                          Add to Cart
-                        </Button>
+                        {product.price[0] * quantity}
                       </StyledTableCell>
                       <StyledTableCell align="middle">
-                        <CancelOutlinedIcon
+                        <Link href={`/singleProduct/${product._id}`}>
+                          <EditIcon sx={{mr:2, cursor:"pointer"}} />
+                        </Link>
+                      
+                        <CancelOutlinedIcon sx={{cursor:"pointer"}}
                           onClick={() => handleClose(product._id)}
                         />
+                        
                       </StyledTableCell>
                     </StyledTableRow>
                   </TableBody>
