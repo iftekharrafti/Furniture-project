@@ -1,10 +1,10 @@
 import { Box, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import TitleContainer from "../components/TitleContainer";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "next/link";
 import GoogleIcon from '@mui/icons-material/Google';
-import useFirebase from "../hooks/useFirebase";
+import useAuth from "../hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   login: {
@@ -80,7 +80,24 @@ const useStyles = makeStyles((theme) => ({
 
 const Signin = () => {
   const styles = useStyles();
-  const {user, signInWithGoogle} = useFirebase();
+  const {user, signInWithGoogle, signinUser} = useAuth();
+  const [loginData, setloginData] = useState({});
+
+  const handleBlur = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+
+    const newLoginData = {...loginData}
+    newLoginData[field] = value;
+    console.log(newLoginData)
+    setloginData(newLoginData)
+  }
+
+  const handleSubmit = (e) => {
+    signinUser(loginData.email, loginData.password)
+    e.preventDefault()
+  }
+
   return (
     <Box>
       {/* Login Title */}
@@ -88,7 +105,7 @@ const Signin = () => {
 
       {/* Login Form */}
       <Box className={styles.login}>
-        <form action="">
+        <form action="" onSubmit={handleSubmit}>
           <Box className={styles.inputGroup}>
             <label className={styles.label} htmlFor="">
               Email *
@@ -96,8 +113,8 @@ const Signin = () => {
             <input
               className={styles.input}
               type="email"
-              name=""
-              id=""
+              name="email"
+              onBlur={handleBlur}
               placeholder="Enter Your Email"
               required
             />
@@ -109,8 +126,8 @@ const Signin = () => {
             <input
               className={styles.input}
               type="password"
-              name=""
-              id=""
+              name="password"
+              onBlur={handleBlur}
               placeholder="Your Password"
               required
             />

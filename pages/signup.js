@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { Box, Button } from "@mui/material";
 import TitleContainer from "../components/TitleContainer";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "next/link";
+import useAuth from "../hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   signup: {
@@ -71,12 +72,34 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
   const styles = useStyles();
+  const [signUpData, setSignUpData] = useState({});
+  const {registerUser} = useAuth();
+
+  const handleBlur = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+
+    const newSignUpData = {...signUpData}
+    newSignUpData[field] = value;
+    console.log(newSignUpData)
+    setSignUpData(newSignUpData)
+  }
+
+  const handleSubmit = (e) => {
+    if(signUpData.password !== signUpData.password2){
+      alert('Password did not match');
+      return
+    }
+    registerUser(signUpData.email, signUpData.password)
+    e.preventDefault()
+  }
+
   return (
     <Box>
       <TitleContainer title="Signup" name1="Home" link1="/" name3="Signup" />
 
       <Box className={styles.signup}>
-        <form action="">
+        <form action="" onSubmit={handleSubmit}>
           {/* Full Name */}
           <Box className={styles.fullName} sx={{ mb: 3 }}>
             <Box className={styles.inputGroup}>
@@ -116,9 +139,9 @@ const Signup = () => {
             <input
               className={styles.input}
               type="email"
-              name=""
-              id=""
               placeholder="Enter Your Email"
+              name="email"
+              onBlur={handleBlur}
               required
             />
           </Box>
@@ -146,8 +169,8 @@ const Signup = () => {
             <input
               className={styles.input}
               type="password"
-              name=""
-              id=""
+              name="password"
+              onBlur={handleBlur}
               placeholder="Password"
               required
             />
@@ -160,8 +183,8 @@ const Signup = () => {
             <input
               className={styles.input}
               type="password"
-              name=""
-              id=""
+              name="password2"
+              onBlur={handleBlur}
               placeholder="Password"
               required
             />

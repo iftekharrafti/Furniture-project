@@ -19,6 +19,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Badge, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 import SideProductModal from "../components/SideProductModal";
+import useFirebase from "../hooks/useFirebase";
+import useAuth from "../hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -27,15 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const pages = ['home', 'about']
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [drawer, setDrawer] = React.useState(false);
   const styles = useStyles();
   const quantity = useSelector((state) => state.cart.quantity);
+  const { user } = useAuth();
 
   const toggleDrawer = (open) => (event) => {
     setDrawer(open);
@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
 
   const pages = [
     {
-      id: 1,
+      id: 0,
       name: "Home",
       href: "/",
     },
@@ -73,12 +73,20 @@ const ResponsiveAppBar = () => {
       href: "/contact",
     },
   ];
+
+  // Person Dropdown
   const persons = [
-    {
-      id: 1,
-      name: "Signin",
-      href: "/signIn",
-    },
+    user.email
+      ? {
+          id: 0,
+          name: "My Account",
+          href: "/myAccount",
+        }
+      : {
+          id: 0,
+          name: "SignIn",
+          href: "/signIn",
+        },
     {
       id: 1,
       name: "Cart",
@@ -230,6 +238,8 @@ const ResponsiveAppBar = () => {
               </Badge>
               <SideProductModal toggleDrawer={toggleDrawer} drawer={drawer} />
             </Box>
+            {/*  */}
+            {user.email && <h2>{user.email}</h2>}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
