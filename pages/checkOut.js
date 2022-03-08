@@ -7,7 +7,7 @@ const CheckOut = () => {
     const router = useRouter();
 
     if(!user.email){
-        router.push('/')
+        router.push('/signIn')
     }
     
 

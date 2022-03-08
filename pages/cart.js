@@ -21,8 +21,8 @@ import Image from "next/image";
 import { addProduct, removeWishlistProduct } from "../redux/cartSlice";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import TitleContainer from "../components/TitleContainer";
-import EditIcon from '@mui/icons-material/Edit';
-import Link from 'next/link';
+import EditIcon from "@mui/icons-material/Edit";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     margin: "20px 0",
-    width:"100px"
+    width: "100px",
   },
   inputGroup: {
     border: "1px solid #F3F4F6",
@@ -56,9 +56,28 @@ const useStyles = makeStyles((theme) => ({
   inputCount: {
     width: "50px",
     border: "1px solid #F3F4F6",
-    padding:'5px',
+    padding: "5px",
     "&:focus": {
       outline: "none",
+    },
+  },
+  checkout: {
+    backgroundColor: "#EBEBEB",
+    margin: "50px 0",
+    display: "flex",
+    justifyContent: "flex-end",
+    padding: "15px",
+  },
+  checkoutBtn: {
+    backgroundColor: "rgb(47, 51, 58)",
+    color: "#fff",
+    padding: "15px 30px",
+    fontSize: "16px",
+    fontWeight: "600",
+    fontFamily: "Raleway",
+    borderRadius: "3px",
+    "&:hover": {
+      backgroundColor: "rgb(255, 112, 4)",
     },
   },
 }));
@@ -92,6 +111,15 @@ const Cart = () => {
 
   const [price, setPrice] = useState();
   const [quantity, setQuantity] = useState(1);
+
+  const increase = (id) => {
+    products.find((product) => product._id === id);
+    setQuantity(quantity + 1);
+  };
+
+  const decrease = (id) => {
+    setQuantity(quantity - 1);
+  };
 
   const dispatch = useDispatch();
 
@@ -162,7 +190,7 @@ const Cart = () => {
                           <Box className={styles.inputGroup}>
                             <button
                               className={styles.button}
-                              onClick={() => setQuantity(quantity - 1)}
+                              onClick={() => decrease(product._id)}
                             >
                               -
                             </button>
@@ -174,7 +202,7 @@ const Cart = () => {
                             />
                             <button
                               className={styles.button}
-                              onClick={() => setQuantity(quantity + 1)}
+                              onClick={() => increase(product._id)}
                             >
                               +
                             </button>
@@ -186,20 +214,34 @@ const Cart = () => {
                       </StyledTableCell>
                       <StyledTableCell align="middle">
                         <Link href={`/singleProduct/${product._id}`}>
-                          <EditIcon sx={{mr:2, cursor:"pointer"}} />
+                          <EditIcon sx={{ mr: 2, cursor: "pointer" }} />
                         </Link>
-                      
-                        <CancelOutlinedIcon sx={{cursor:"pointer"}}
+
+                        <CancelOutlinedIcon
+                          sx={{ cursor: "pointer" }}
                           onClick={() => handleClose(product._id)}
                         />
-                        
                       </StyledTableCell>
                     </StyledTableRow>
                   </TableBody>
                 ))}
+                <tfoot>
+                  <tr sx={{ textAlign: "right" }}>
+                    <Typography sx={{ p: 2 }} variant="h2" className="title3">
+                      Grand Total: ${total}.00
+                    </Typography>
+                  </tr>
+                </tfoot>
               </Table>
             </TableContainer>
           )}
+          <Box className={styles.checkout}>
+            <Link href="/checkOut" passHref>
+              <Button className={styles.checkoutBtn}>
+                PROCEED TO CHECKOUT
+              </Button>
+            </Link>
+          </Box>
         </Container>
       </Box>
     </Box>

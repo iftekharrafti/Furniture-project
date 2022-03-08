@@ -7,6 +7,7 @@ import Image from "next/image";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { useDispatch } from "react-redux";
 import { removeProduct } from "../redux/cartSlice";
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme) => ({
   top: {
@@ -22,15 +23,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    position: "absolute",
+    position: "fixed",
     bottom: 0,
-    left: 0,
-    right: 0,
-    width: "90%",
+    right: "30px",
+    width: "350px",
     height: "50px",
     margin: "15px 10px",
     padding: "10px",
     margin: "10px auto",
+    cursor: "pointer",
     "&:hover": {
       backgroundColor: "#2F333A",
     },
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: "#fff",
     color: "#FF7004",
+    
     "&:hover": {
       backgroundColor: "#fff",
       color: "#FF7004",
@@ -141,15 +143,17 @@ const SideProductModal = ({ drawer, toggleDrawer }) => {
           )}
 
           {/* Bottom */}
-          <Box className={styles.bottom}>
-            <Typography
-              variant="body2"
-              className={`title3 ${styles.bottomDesc}`}
-            >
-              View Cart
-            </Typography>
-            <Button className={styles.button}>${total}</Button>
-          </Box>
+          <Link href="/cart" passHref>
+            <Box className={styles.bottom}>
+              <Typography
+                variant="body2"
+                className={`title3 ${styles.bottomDesc}`}
+              >
+                View Cart
+              </Typography>
+              <Button className={styles.button}>${total}</Button>
+            </Box>
+          </Link>
         </Box>
       </Drawer>
     </Box>

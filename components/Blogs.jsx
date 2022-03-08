@@ -44,6 +44,7 @@ const Blogs = () => {
 
   return (
     <Box>
+      {/* Title Container */}
       <Box className={styles.titleContainer}>
         <Typography className="title" variant="h4">
           Latest News

@@ -92,9 +92,8 @@ const Signup = () => {
       alert("Password did not match");
       return;
     }
-    const newSignUpData = {...signUpData}
     try {
-      await axios.post("http://localhost:3000/api/users", newSignUpData);
+      await axios.post("http://localhost:3000/api/users", signUpData);
       await registerUser(signUpData.email, signUpData.password);
       alert("user added successfully");
       

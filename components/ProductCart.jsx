@@ -5,10 +5,11 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PreviewOutlinedIcon from "@mui/icons-material/PreviewOutlined";
 import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import QuickViewModal from "./QuickViewModal";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, addWishlistProduct, addCompareProduct } from "../redux/cartSlice";
+import { addProduct, addWishlistProduct, addCompareProduct, removeWishlistProduct } from "../redux/cartSlice";
 import { ToastContainer, toast } from 'react-toastify';
 
 const ProductCart = ({ product }) => {
@@ -16,28 +17,40 @@ const ProductCart = ({ product }) => {
   const [open, setOpen] = useState(false);
   const [price, setPrice] = useState(product.prices[0]);
   const [quantity, setQuantity] = useState(1);
+  const [wishList, setWishList] = useState(false)
+  const [compare, setCompare] = useState(false)
   const wishListProducts = useSelector(state => state.cart.wishlistProducts)
   const dispatch = useDispatch();
-  console.log(wishListProducts);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleCartClick = () => {
     dispatch(addProduct({...product, price, quantity}))
+    toast.success(`Successfully Add!`, {
+      autoClose: 3000
+    });
   }
 
   const handleWishlistClick = () => {
     dispatch(addWishlistProduct({...product}))
+    setWishList(true)
     toast.success(`Added to WishList!`, {
       autoClose: 3000
+    });
+  }
+  const removeWishlist = (id) => {
+    dispatch(removeWishlistProduct(id))
+    setWishList(false)
+    toast.error(`Remove from Wishlist!`, {
+      autoClose: 2000
     });
   }
 
   const handleCompareClick = () => {
     dispatch(addCompareProduct({...product}))
     toast.success(`Added to Compare!`, {
-      autoClose: 3000
+      autoClose: 2000
     });
   }
 
@@ -72,14 +85,18 @@ const ProductCart = ({ product }) => {
         </Typography>
         {/* Product Wishlist */}
 
-       
-
-        <Box className="productLove" onClick={handleWishlistClick} title="Add to Wishlist">
+        {
+          wishList ? <Box className="productLove" onClick={() =>removeWishlist(product._id)} title="Add to Wishlist">
+          <DeleteOutlinedIcon />
+        </Box> : <Box className="productLove" onClick={handleWishlistClick} title="Add to Wishlist">
           <FavoriteBorderIcon />
         </Box>
+        }
+       
+        
 
         {/* Product Quick View */}
-
+        
         <Box className="productQuick" title="Quick View">
           <PreviewOutlinedIcon onClick={handleOpen} />
           <QuickViewModal

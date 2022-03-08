@@ -100,7 +100,7 @@ const ResponsiveAppBar = () => {
     {
       id: 4,
       name: "Compare",
-      href: "/Compare",
+      href: "/compare",
     },
   ];
 

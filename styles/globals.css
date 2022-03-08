@@ -103,7 +103,10 @@ a {
   align-items: center;
   cursor: pointer;
 }
-
+.productLove:hover, .productQuick:hover, .productCompare:hover{
+  background-color:rgb(255, 112, 4);
+  color:#fff
+}
 .productQuick{
   position: absolute;
   top: 55px;
@@ -161,6 +164,15 @@ a {
 }
 .productButtonDesc{
   color: #222;
+  width: 100%;
+}
+.productButtonDesc:hover{
+  color:rgb(255, 112, 4);
+  background-color:#fff;
+  width: 100%;
+}
+.productButtonDesc:focus{
+  background-color:#fff;
 }
 
 .productContainer:hover .productQuick,.productContainer:hover .productCompare,

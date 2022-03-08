@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     cursor: "pointer",
   },
-  sideCartContainer:{
+  sideCartContainer:{ 
     width: "80px",
     height: "100px",
     backgroundColor: "#2F333A",
