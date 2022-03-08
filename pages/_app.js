@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import AuthProvider from "../context/AuthProvider/AuthProvider";
 import { store } from "../redux/store";
 import "../styles/globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
   return (

@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Box, Button } from "@mui/material";
 import TitleContainer from "../components/TitleContainer";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "next/link";
 import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   signup: {
@@ -73,26 +74,34 @@ const useStyles = makeStyles((theme) => ({
 const Signup = () => {
   const styles = useStyles();
   const [signUpData, setSignUpData] = useState({});
-  const {registerUser} = useAuth();
+  const { registerUser } = useAuth();
 
   const handleBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
 
-    const newSignUpData = {...signUpData}
+    const newSignUpData = { ...signUpData };
     newSignUpData[field] = value;
-    console.log(newSignUpData)
-    setSignUpData(newSignUpData)
-  }
+    console.log(newSignUpData);
+    setSignUpData(newSignUpData);
+  };
 
-  const handleSubmit = (e) => {
-    if(signUpData.password !== signUpData.password2){
-      alert('Password did not match');
-      return
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (signUpData.password !== signUpData.password2) {
+      alert("Password did not match");
+      return;
     }
-    registerUser(signUpData.email, signUpData.password)
-    e.preventDefault()
-  }
+    const newSignUpData = {...signUpData}
+    try {
+      await axios.post("http://localhost:3000/api/users", newSignUpData);
+      await registerUser(signUpData.email, signUpData.password);
+      alert("user added successfully");
+      
+    } catch (err) {
+      alert('Something went wrong')
+    }
+  };
 
   return (
     <Box>
@@ -109,8 +118,8 @@ const Signup = () => {
               <input
                 className={styles.input}
                 type="text"
-                name=""
-                id=""
+                name="firstName"
+                onBlur={handleBlur}
                 placeholder="First Name"
                 required
               />
@@ -123,8 +132,8 @@ const Signup = () => {
                 <input
                   className={styles.input}
                   type="text"
-                  name=""
-                  id=""
+                  name="lastName"
+                  onBlur={handleBlur}
                   placeholder="Last Name"
                   required
                 />
@@ -154,8 +163,8 @@ const Signup = () => {
             <input
               className={styles.input}
               type="text"
-              name=""
-              id=""
+              name="number"
+              onBlur={handleBlur}
               placeholder="Your Number"
               required
             />

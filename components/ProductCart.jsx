@@ -7,15 +7,18 @@ import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import QuickViewModal from "./QuickViewModal";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProduct, addWishlistProduct, addCompareProduct } from "../redux/cartSlice";
+import { ToastContainer, toast } from 'react-toastify';
 
-const ProductCart = ({ product, sortProduct }) => {
+const ProductCart = ({ product }) => {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [price, setPrice] = useState(product.prices[0]);
   const [quantity, setQuantity] = useState(1);
+  const wishListProducts = useSelector(state => state.cart.wishlistProducts)
   const dispatch = useDispatch();
+  console.log(wishListProducts);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -26,16 +29,22 @@ const ProductCart = ({ product, sortProduct }) => {
 
   const handleWishlistClick = () => {
     dispatch(addWishlistProduct({...product}))
+    toast.success(`Added to WishList!`, {
+      autoClose: 3000
+    });
   }
 
   const handleCompareClick = () => {
     dispatch(addCompareProduct({...product}))
+    toast.success(`Added to Compare!`, {
+      autoClose: 3000
+    });
   }
 
   return (
-    <Grid item xs={6} md={3}>
+    <Grid item xs={6} md={3} sx={{mb:4}}>
       <Box className="productContainer">
-        <Link href={`/singleProduct/${product._id}`}>
+        <Link href={`/singleProduct/${product._id}`} passHref>
           <Image
             style={{cursor: "pointer"}}
             className="productImg"
@@ -62,6 +71,8 @@ const ProductCart = ({ product, sortProduct }) => {
           ${product.prices[0]}
         </Typography>
         {/* Product Wishlist */}
+
+       
 
         <Box className="productLove" onClick={handleWishlistClick} title="Add to Wishlist">
           <FavoriteBorderIcon />
@@ -103,6 +114,7 @@ const ProductCart = ({ product, sortProduct }) => {
             <ShoppingCartIcon /> Add to Cart
           </Button>
         </Box>
+        <ToastContainer />
       </Box>
     </Grid>
   );

@@ -34,6 +34,8 @@ import TitleContainer from "../components/TitleContainer";
     const styles = useStyles();
     const [sort, setSort] = useState("");
     const [products, setProducts] = useState([]);
+    const [sortedProduct, setSortedProduct] = useState([]);
+  const [sortTrue, setSortTrue] = useState(false);
   
     useEffect(() => {
       fetch("http://localhost:3000/api/product")
@@ -44,11 +46,37 @@ import TitleContainer from "../components/TitleContainer";
           );
           setProducts(hospitalFurniture);
         });
-    }, []);
+        if (sortTrue) {
+          setSortedProduct([]);
+          if (sort === "priceHighLow" && sortedProduct <= 0) {
+            const highToLow = products.sort((a, b) => b.prices[0] - a.prices[0]);
+            setSortedProduct(highToLow);
+            setSortTrue(false);
+          } else if (sort === "priceLowHigh" && sortedProduct <= 0) {
+            const lowToHigh = products.sort((a, b) => a.prices[0] - b.prices[0]);
+            setSortedProduct(lowToHigh);
+            setSortTrue(false);
+          }
+        }
+    }, [products]);
   
     const handleSortChange = (event) => {
       setSort(event.target.value);
     };
+
+      // Price High To Low Converting
+  if (sortedProduct <= 0) {
+    if (sort === "priceHighLow" && sortedProduct <= 0) {
+      const highToLow = products.sort((a, b) => b.prices[0] - a.prices[0]);
+      setSortedProduct(highToLow);
+      setSortTrue(true);
+    } else if (sort === "priceLowHigh" && sortedProduct <= 0) {
+      const lowToHigh = products.sort((a, b) => a.prices[0] - b.prices[0]);
+      setSortedProduct(lowToHigh);
+      setSortTrue(true);
+    }
+  }
+
     return (
       <Box>
         <TitleContainer title="Hospital Furniture" name1="Home" link1="/" name2="Collection" link2="/" name3="Hospital Furniture" />
@@ -74,10 +102,10 @@ import TitleContainer from "../components/TitleContainer";
                     inputProps={{ "aria-label": "Without label" }}
                   >
                     <MenuItem value="">Relevance</MenuItem>
-                    <MenuItem value={10}>Name (A - Z)</MenuItem>
-                    <MenuItem value={11}>Name (Z - A)</MenuItem>
-                    <MenuItem value={12}>Price (Low - High)</MenuItem>
-                    <MenuItem value={13}>Price (High - Low)</MenuItem>
+                  <MenuItem value="priceLowHigh">Price (Low - High)</MenuItem>
+                  <MenuItem value="priceHighLow">Price (High - Low)</MenuItem>
+                  <MenuItem value="nameLowUp">Name (A - Z)</MenuItem>
+                  <MenuItem value="nameUpLow">Name (Z - A)</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -85,9 +113,19 @@ import TitleContainer from "../components/TitleContainer";
           </Box>
   
           {/* <Box> */}
-            <Grid container spacing={2}>
-                {products.map(product => <ProductCart key={product._id} product={product}/>)}
-            </Grid>
+          {sortedProduct.length <= 0 ? (
+          <Grid container spacing={2}>
+            {products.map((product) => (
+              <ProductCart key={product._id} product={product} />
+            ))}
+          </Grid>
+        ) : (
+          <Grid container spacing={2}>
+            {sortedProduct.map((product) => (
+              <ProductCart key={product._id} product={product} />
+            ))}
+          </Grid>
+        )}
           {/* </Box> */}
         </Container>
       </Box>

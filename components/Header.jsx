@@ -238,8 +238,6 @@ const ResponsiveAppBar = () => {
               </Badge>
               <SideProductModal toggleDrawer={toggleDrawer} drawer={drawer} />
             </Box>
-            {/*  */}
-            {user.email && <h2>{user.email}</h2>}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
