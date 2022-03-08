@@ -72,7 +72,7 @@ import {
 
             {/* Footer About us */}
 
-            <Grid item xs={12} md={3} sx={{ pr: 4 }}>
+            <Grid item xs={6} md={3} sx={{ pr: 4 }}>
               <Typography className={styles.title} variant="subtitle2">
                 ABOUT US
               </Typography>
@@ -90,7 +90,7 @@ import {
                 </Link>
                 <Link href="http://www.facebook.com" target="_blank" passHref>
                 <LinkedInIcon sx={{mr:1, cursor: "pointer"}}></LinkedInIcon>
-                </Link> 
+                </Link>  
                 <Link href="http://www.facebook.com" target="_blank" passHref>
                 <YouTubeIcon sx={{cursor: "pointer" }}></YouTubeIcon>
                 </Link>
@@ -100,7 +100,7 @@ import {
 
             {/* Footer Information */}
 
-            <Grid item xs={12} md={3}>
+            <Grid item xs={6} md={3}>
               <Typography className={styles.title} variant="subtitle2">
                 INFORMATION
               </Typography>
@@ -125,7 +125,7 @@ import {
 
               {/* Footer My Account */}
 
-            <Grid item xs={12} md={3}>
+            <Grid item xs={6} md={3}>
               <Typography className={styles.title} variant="subtitle2">
                 MY ACCOUNT
               </Typography>
@@ -150,7 +150,7 @@ import {
 
             {/* Footer NewsLetter */}
 
-            <Grid item xs={12} md={3}>
+            <Grid item xs={6} md={3}>
               <Typography className={styles.title} variant="subtitle2">
                 NEWSLETTER
               </Typography>

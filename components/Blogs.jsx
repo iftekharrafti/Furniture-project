@@ -21,6 +21,25 @@ const useStyles = makeStyles((theme) => ({
     width: "40%",
     margin: "0 auto",
     textAlign: "center",
+    [theme.breakpoints.down("xs")]: {
+      width: "80%",
+    },
+  },
+  item: {
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      marginBottom: "10px",
+      width:"100%"
+    },
+  },
+  button: {
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      justifyContent: "center",
+    },
   },
   newsSpan: {
     fontSize: "14px",
@@ -58,8 +77,8 @@ const Blogs = () => {
         <Container>
           <Grid container spacing={2}>
             {blogs.map((blog) => (
-              <Grid item xs={12} md={4} key={blog._id}>
-                <Card sx={{ maxWidth: 345 }} className={styles.newsCard}>
+              <Grid item xs={12} sm={6} md={4} key={blog._id} className={styles.item}>
+                <Card sx={{ maxWidth: "100%" }} className={styles.newsCard}>
                   <CardMedia
                     component="img"
                     height="160"
@@ -93,9 +112,11 @@ const Blogs = () => {
                   </CardContent>
                   <CardActions>
                     <Link href={`/singleBlog/${blog._id}`} passHref>
-                      <Button className="btn" size="small">
-                        Read More
-                      </Button>
+                      <Box className={styles.button}>
+                        <Button className={`btn`} size="small">
+                          Read More
+                        </Button>
+                      </Box>
                     </Link>
                   </CardActions>
                 </Card>

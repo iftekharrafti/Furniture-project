@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "50px auto",
     boxShadow: "rgb(0 0 0 / 75%) 0px 0px 16px -1px",
     padding: "40px 30px",
+    [theme.breakpoints.down("xs")]:{
+      width:"90%",
+      height: "100vh",
+    }
   },
   inputGroup: {
     display: "flex",
@@ -52,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     gridGap: "20px",
     width: "100%",
     marginTop: "20px",
+    [theme.breakpoints.down("xs")]:{
+      display: "grid",
+    gridTemplateColumns: "1fr",
+    }
   },
   alreadyAccount: {
     color: "#fff",

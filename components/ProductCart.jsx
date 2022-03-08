@@ -52,6 +52,7 @@ const ProductCart = ({ product }) => {
     toast.success(`Added to Compare!`, {
       autoClose: 2000
     });
+    setCompare(true)
   }
 
   return (
@@ -107,10 +108,15 @@ const ProductCart = ({ product }) => {
         </Box>
 
         {/* Product Compare */}
-
-        <Box className="productCompare" onClick={handleCompareClick} title="Add to Compare">
+        {
+          compare ? <Box className="productCompare" onClick={handleCompareClick} title="Add to Compare">
+          <DeleteOutlinedIcon />
+        </Box> : <Box className="productCompare" onClick={handleCompareClick} title="Add to Compare">
           <CompareOutlinedIcon />
         </Box>
+        }
+
+        
 
         {/* Product Discout */}
 

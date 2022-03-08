@@ -151,97 +151,103 @@ const Cart = () => {
             </Box>
           ) : (
             //   Table Details
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                {/* Table Head */}
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell>IMAGE</StyledTableCell>
-                    <StyledTableCell align="left">PRODUCT NAME</StyledTableCell>
-                    <StyledTableCell align="left">UNTIL PRICE</StyledTableCell>
-                    <StyledTableCell align="left">QTY</StyledTableCell>
-                    <StyledTableCell align="left">SUBTOTAL</StyledTableCell>
-                    <StyledTableCell align="left">ACTION</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                {/* Table Body */}
-                {products.map((product) => (
-                  <TableBody key={product._id}>
-                    <StyledTableRow>
-                      <StyledTableCell component="th" scope="row">
-                        {/* Image */}
-                        <Image
-                          src={product.img}
-                          alt=""
-                          width="150"
-                          height="100"
-                          objectFit="cover"
-                        />
-                      </StyledTableCell>
-                      {/* Title */}
+            <Box>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  {/* Table Head */}
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>IMAGE</StyledTableCell>
                       <StyledTableCell align="left">
-                        {product.title}
+                        PRODUCT NAME
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        ${product.prices[0]}
+                        UNTIL PRICE
                       </StyledTableCell>
-                      <StyledTableCell align="left">
-                        <Box className={styles.addToCart}>
-                          <Box className={styles.inputGroup}>
-                            <button
-                              className={styles.button}
-                              onClick={() => decrease(product._id)}
-                            >
-                              -
-                            </button>
-                            <input
-                              onChange={(e) => setQuantity(e.target.value)}
-                              type="number"
-                              value={quantity}
-                              className={`inputNumber ${styles.inputCount}`}
-                            />
-                            <button
-                              className={styles.button}
-                              onClick={() => increase(product._id)}
-                            >
-                              +
-                            </button>
+                      <StyledTableCell align="left">QTY</StyledTableCell>
+                      <StyledTableCell align="left">SUBTOTAL</StyledTableCell>
+                      <StyledTableCell align="left">ACTION</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  {/* Table Body */}
+                  {products.map((product) => (
+                    <TableBody key={product._id}>
+                      <StyledTableRow>
+                        <StyledTableCell component="th" scope="row">
+                          {/* Image */}
+                          <Image
+                            src={product.img}
+                            alt=""
+                            width="150"
+                            height="100"
+                            objectFit="cover"
+                          />
+                        </StyledTableCell>
+                        {/* Title */}
+                        <StyledTableCell align="left">
+                          {product.title}
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                          ${product.prices[0]}
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                          <Box className={styles.addToCart}>
+                            <Box className={styles.inputGroup}>
+                              <button
+                                className={styles.button}
+                                onClick={() => decrease(product._id)}
+                              >
+                                -
+                              </button>
+                              <input
+                                onChange={(e) => setQuantity(e.target.value)}
+                                type="number"
+                                value={quantity}
+                                className={`inputNumber ${styles.inputCount}`}
+                              />
+                              <button
+                                className={styles.button}
+                                onClick={() => increase(product._id)}
+                              >
+                                +
+                              </button>
+                            </Box>
                           </Box>
-                        </Box>
-                      </StyledTableCell>
-                      <StyledTableCell align="left">
-                        {product.price[0] * quantity}
-                      </StyledTableCell>
-                      <StyledTableCell align="middle">
-                        <Link href={`/singleProduct/${product._id}`}>
-                          <EditIcon sx={{ mr: 2, cursor: "pointer" }} />
-                        </Link>
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                          {product.price[0] * quantity}
+                        </StyledTableCell>
+                        <StyledTableCell align="middle">
+                          <Link href={`/singleProduct/${product._id}`}>
+                            <EditIcon sx={{ mr: 2, cursor: "pointer" }} />
+                          </Link>
 
-                        <CancelOutlinedIcon
-                          sx={{ cursor: "pointer" }}
-                          onClick={() => handleClose(product._id)}
-                        />
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  </TableBody>
-                ))}
-                <tfoot>
-                  <tr sx={{ textAlign: "right" }}>
-                    <Typography sx={{ p: 2 }} variant="h2" className="title3">
-                      Grand Total: ${total}.00
-                    </Typography>
-                  </tr>
-                </tfoot>
-              </Table>
-            </TableContainer>
+                          <CancelOutlinedIcon
+                            sx={{ cursor: "pointer" }}
+                            onClick={() => handleClose(product._id)}
+                          />
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    </TableBody>
+                  ))}
+                  <tfoot>
+                    <tr sx={{ textAlign: "right" }}>
+                      <Typography sx={{ p: 2 }} variant="h2" className="title3">
+                        Grand Total: ${total}.00
+                      </Typography>
+                    </tr>
+                  </tfoot>
+                </Table>
+              </TableContainer>
+              <Box className={styles.checkout}>
+                <Link href="/checkOut" passHref>
+                  <Button className={styles.checkoutBtn}>
+                    PROCEED TO CHECKOUT
+                  </Button>
+                </Link>
+              </Box>
+            </Box>
           )}
-          <Box className={styles.checkout}>
-            <Link href="/checkOut" passHref>
-              <Button className={styles.checkoutBtn}>
-                PROCEED TO CHECKOUT
-              </Button>
-            </Link>
-          </Box>
         </Container>
       </Box>
     </Box>

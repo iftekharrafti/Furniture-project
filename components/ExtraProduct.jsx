@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "60px 0",
     display: "flex",
     justifyContent: "space-between",
+    [theme.breakpoints.up("xs")]:{
+      display: "flex",
+    justifyContent: "space-around",
+    }
   },
   item: {
     display: "flex",
@@ -20,7 +24,13 @@ const useStyles = makeStyles((theme) => ({
     width: "200px",
     height: "200px",
     borderRadius: "50%",
-    cursor: "pointer"
+    cursor: "pointer",
+    [theme.breakpoints.up("xs")]:{
+      width: "150px",
+    height: "150px",
+    borderRadius: "50%",
+    marginBottom:"15px"
+    }
   },
 }));
 
@@ -32,7 +42,7 @@ const ExtraProduct = () => {
         <Link href="/homeFurniture" passHref>
           <Grid
             item
-            xs={6}
+            xs={5}
             md={2}
             sx={{ padding: "0" }}
             className={styles.item}
@@ -50,7 +60,7 @@ const ExtraProduct = () => {
         <Link href="/homeFurniture" passHref>
           <Grid
             item
-            xs={6}
+            xs={5}
             md={2}
             sx={{ padding: "0" }}
             className={styles.item}
@@ -68,7 +78,7 @@ const ExtraProduct = () => {
         <Link href="/homeFurniture" passHref>
           <Grid
             item
-            xs={6}
+            xs={5}
             md={2}
             sx={{ padding: "0" }}
             className={styles.item}
@@ -86,7 +96,7 @@ const ExtraProduct = () => {
         <Link href="/officeFurniture" passHref>
           <Grid
             item
-            xs={6}
+            xs={5}
             md={2}
             sx={{ padding: "0" }}
             className={styles.item}
@@ -104,7 +114,7 @@ const ExtraProduct = () => {
         <Link href="/officeFurniture" passHref>
           <Grid
             item
-            xs={6}
+            xs={5}
             md={2}
             sx={{ padding: "0" }}
             className={styles.item}

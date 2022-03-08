@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "50px auto",
     boxShadow: "rgb(0 0 0 / 75%) 0px 0px 16px -1px",
     padding: "40px 30px",
+    [theme.breakpoints.down("xs")]:{
+      width: "90%"
+    }
   },
   inputGroup: {
     display: "flex",
@@ -63,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
   },
   create: {
     backgroundColor: "rgb(47, 51, 58)",
+    [theme.breakpoints.down("xs")]: {
+      fontSize:"12px",
+    },
     "&:hover": {
       color: "rgb(59, 72, 99)",
       backgroundColor: "rgb(235, 235, 235)",
