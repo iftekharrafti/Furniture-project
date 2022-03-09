@@ -90,7 +90,6 @@ const Signup = () => {
 
     const newSignUpData = { ...signUpData };
     newSignUpData[field] = value;
-    console.log(newSignUpData);
     setSignUpData(newSignUpData);
   };
 
@@ -100,15 +99,18 @@ const Signup = () => {
       alert("Password did not match");
       return;
     }
+    console.log(signUpData)
     try {
-      await axios.post("http://localhost:3000/api/users", signUpData);
-      await registerUser(signUpData.email, signUpData.password);
+      await axios.post('http://localhost:3000/api/users',signUpData )
+      signUpData.fullName = signUpData.firstName + ' '+ signUpData.lastName
+      await registerUser(signUpData.email, signUpData.password, signUpData.fullName);
       alert("user added successfully");
       
     } catch (err) {
       alert('Something went wrong')
     }
   };
+
 
   return (
     <Box>
@@ -170,7 +172,7 @@ const Signup = () => {
             <input
               className={styles.input}
               type="text"
-              name="number"
+              name="phone"
               onBlur={handleBlur}
               placeholder="Your Number"
               required

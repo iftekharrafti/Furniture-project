@@ -3,6 +3,7 @@ import React from "react";
 import DashboardSidebar from "../../components/DashboardSidebar";
 import TitleContainer from "../../components/TitleContainer";
 import { makeStyles } from "@material-ui/core/styles";
+import useAuth from "../../hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MyAccount = () => {
   const styles = useStyles();
+  const {user} = useAuth();
   return (
     <Box>
       <TitleContainer
@@ -36,8 +38,7 @@ const MyAccount = () => {
                   Dashboard
                 </Typography>
                 <Typography variant="body2" className="desc">
-                  Hello, Ptr Mostar.
-                  dashboard. you can easily check & view your recent orders,
+                  Hello, <b>{user.displayName}</b> dashboard. you can easily check & view your recent orders,
                   manage your shipping and billing addresses and edit your
                   password and account details.
                 </Typography>

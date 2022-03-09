@@ -1,5 +1,5 @@
 import dbConnect from "../../../util/mongo";
-import Users from "../../../models/Users";
+import User from "../../../models/Users";
 
 export default async function handler(req, res) {
     const {method} = req;
@@ -8,7 +8,8 @@ export default async function handler(req, res) {
 
     if(method === 'GET') {
       try{
-        
+        const user = await User.find();
+        res.status(200).json(user);
       }catch(err){
         res.status(500).json(err)
       }
@@ -16,8 +17,8 @@ export default async function handler(req, res) {
 
     if(method === 'POST') {
       try{
-        const User = await Users.create(req.body)
-        res.status(201).json(User)
+        const newUser = await User.create(req.body)
+        res.status(201).json(newUser)
       }catch(err){
         res.status(500).json(err)
       }

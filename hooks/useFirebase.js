@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
@@ -27,19 +28,28 @@ const useFirebase = () => {
       .catch((error) => {});
   };
 
-  const registerUser = (email, password) => {
+  const registerUser = (email, password, name) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        // setUser(userCredential.user);
-        // ...
+        const newUser = {email, displayName: name}
+        setUser(newUser)
+        // Send name to firebase after creation
+        updateProfile(auth.currentUser, {
+          displayName: name
+        }).then(() => {
+          // Profile updated!
+          // ...
+        }).catch((error) => {
+          // An error occurred
+          // ...
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
       });
-    alert("register user");
+    router.push('/')
   };
 
   const signinUser = (email, password) => {

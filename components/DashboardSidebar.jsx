@@ -52,14 +52,18 @@ const DashboardSidebar = () => {
           </ListItem>
         </Link>
 
-        <ListItem className={styles.listItem}>
-          <ContactsOutlinedIcon className={styles.icons} />
-          <ListItemText className={styles.item}>ADDRESS</ListItemText>
-        </ListItem>
-        <ListItem className={styles.listItem}>
-          <SettingsOutlinedIcon className={styles.icons} />
-          <ListItemText className={styles.item}>SETTINGS</ListItemText>
-        </ListItem>
+        <Link href="/myAccount/address" passHref>
+          <ListItem className={styles.listItem}>
+            <ContactsOutlinedIcon className={styles.icons} />
+            <ListItemText className={styles.item}>ADDRESS</ListItemText>
+          </ListItem>
+        </Link>
+        <Link href="/myAccount/settings" passHref>
+          <ListItem className={styles.listItem}>
+            <SettingsOutlinedIcon className={styles.icons} />
+            <ListItemText className={styles.item}>SETTINGS</ListItemText>
+          </ListItem>
+        </Link>
         <ListItem onClick={logOut} className={styles.listItem}>
           <LogoutIcon className={styles.icons} />
           <ListItemText className={styles.item}>LOGOUT</ListItemText>

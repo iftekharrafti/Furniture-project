@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
       outline: "none",
     },
   },
+  title:{
+    fontFamily:`"Roboto","Helvetica","Arial",sans-serif"`
+  },
   checkout: {
     backgroundColor: "#EBEBEB",
     margin: "50px 0",
@@ -108,13 +111,21 @@ const Cart = () => {
   const styles = useStyles();
   const products = useSelector((state) => state.cart.cartProducts);
   const total = useSelector((state) => state.cart.total);
+  const productQuantity = useSelector((state) => state.cart.specificQuantity);
 
   const [price, setPrice] = useState();
   const [quantity, setQuantity] = useState(1);
+  const [cartItems, setCartItems] = useState(products)
 
   const increase = (id) => {
-    products.find((product) => product._id === id);
-    setQuantity(quantity + 1);
+    const exists =  cartItems.find((product) => product._id === id);
+    if(exists){
+      setCartItems(
+        cartItems.map((x) => x.id === id ? {...exists, qty: exists.qty + 1} : x)
+      )
+    }else{
+      setCartItems([...cartItems, {qty: 1}])
+    }
   };
 
   const decrease = (id) => {
@@ -202,7 +213,7 @@ const Cart = () => {
                               <input
                                 onChange={(e) => setQuantity(e.target.value)}
                                 type="number"
-                                value={quantity}
+                                value={productQuantity}
                                 className={`inputNumber ${styles.inputCount}`}
                               />
                               <button
@@ -218,7 +229,7 @@ const Cart = () => {
                           {product.price[0] * quantity}
                         </StyledTableCell>
                         <StyledTableCell align="middle">
-                          <Link href={`/singleProduct/${product._id}`}>
+                          <Link href={`/singleProduct/${product._id}`} passHref>
                             <EditIcon sx={{ mr: 2, cursor: "pointer" }} />
                           </Link>
 
@@ -232,7 +243,7 @@ const Cart = () => {
                   ))}
                   <tfoot>
                     <tr sx={{ textAlign: "right" }}>
-                      <Typography sx={{ p: 2 }} variant="h2" className="title3">
+                      <Typography sx={{ p: 2 }} variant="h2" className={`title3 ${styles.title}`}>
                         Grand Total: ${total}.00
                       </Typography>
                     </tr>

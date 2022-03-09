@@ -1,13 +1,13 @@
 import { Box, Button, Divider, Drawer, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { useDispatch } from "react-redux";
-import { removeProduct } from "../redux/cartSlice";
-import Link from 'next/link'
+import { addProductQuantity, removeProduct } from "../redux/cartSlice";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
   top: {
@@ -17,6 +17,26 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: "24px",
+  },
+  addToCart: {
+    display: "flex",
+    alignItems: "center",
+    margin: "20px 0",
+    width: "100px",
+  },
+  inputGroup: {
+    border: "1px solid #F3F4F6",
+    width: "100px",
+    display: "flex",
+    marginRight: "15px",
+  },
+  inputCount: {
+    width: "50px",
+    border: "1px solid #F3F4F6",
+    padding: "5px",
+    "&:focus": {
+      outline: "none",
+    },
   },
   bottom: {
     backgroundColor: "#FF7004",
@@ -60,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: "#fff",
     color: "#FF7004",
-    
+
     "&:hover": {
       backgroundColor: "#fff",
       color: "#FF7004",
@@ -73,9 +93,20 @@ const SideProductModal = ({ drawer, toggleDrawer }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.cartProducts);
   const total = useSelector((state) => state.cart.total);
+  const productQuantity = useSelector((state) => state.cart.specificQuantity);
 
   const handleRemove = (id) => {
     dispatch(removeProduct(id));
+  };
+  const [quantity, setQuantity] = useState(1);
+  const [cartItems, setCartItems] = useState(products);
+
+  const increase = (id) => {
+    dispatch(addProductQuantity(id))
+  };
+
+  const decrease = (id) => {
+    setQuantity(quantity - 1);
   };
 
   return (
@@ -131,6 +162,31 @@ const SideProductModal = ({ drawer, toggleDrawer }) => {
                     {" "}
                     {product.title}
                   </Typography>
+                  <Typography variant="body2">
+                     {productQuantity} * ${product.prices[0]}
+                    </Typography>
+                  <Box className={styles.addToCart}>
+                    <Box className={styles.inputGroup}>
+                      <button
+                        className={styles.button}
+                        onClick={() => decrease(product._id)}
+                      >
+                        -
+                      </button>
+                      <input
+                        onChange={(e) => setQuantity(e.target.value)}
+                        type="number"
+                        value={productQuantity}
+                        className={`inputNumber ${styles.inputCount}`}
+                      />
+                      <button
+                        className={styles.button}
+                        onClick={() => increase(product._id)}
+                      >
+                        +
+                      </button>
+                    </Box>
+                  </Box>
                 </Box>
                 <Box sx={{ ml: 1.5 }}>
                   <CloseIcon
