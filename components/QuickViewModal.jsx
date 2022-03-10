@@ -110,7 +110,7 @@ const QuickViewModal = ({ handleClose, open, id }) => {
     fetch(`http://localhost:3000/api/product/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
-  }, []);
+  }, [id]);
 
   const style = {
     position: "absolute",

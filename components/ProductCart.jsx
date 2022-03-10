@@ -71,7 +71,7 @@ const ProductCart = ({ product }) => {
 
         {/* Product Title */}
 
-        <Link href={`/singleProduct/${product._id}`}>
+        <Link href={`/singleProduct/${product._id}`} passHref>
           <Typography className="productTitle" variant="subtitle1">
             {product.title}
           </Typography>

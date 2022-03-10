@@ -60,7 +60,7 @@ const Settings = () => {
             console.log(newUser)
             setUsers(newUser[0])
         })
-    },[])
+    },[user.email])
 
   return (
     <Box>

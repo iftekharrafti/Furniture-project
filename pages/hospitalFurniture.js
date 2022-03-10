@@ -58,7 +58,7 @@ const OfficeFurniture = () => {
         setSortTrue(false);
       }
     }
-  }, [products]);
+  }, [products, sort, sortTrue, sortedProduct]);
 
   const handleSortChange = (event) => {
     setSort(event.target.value);
