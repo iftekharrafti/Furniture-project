@@ -20,7 +20,7 @@ export const cartSlice = createSlice({
         removeProduct:(state, action) => {
             state.cartProducts = state.cartProducts.filter(product => product._id !== action.payload)
             state.quantity -= 1
-            state.total -= action.payload.price * action.payload.quantity;
+            state.total = state.total - (action.payload.price * 1);
         },
         addProductQuantity:(state, action) => {
             state.specificQuantity += 1

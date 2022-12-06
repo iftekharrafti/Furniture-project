@@ -58,6 +58,8 @@ const useFirebase = () => {
         // Signed in
         const user = userCredential.user;
         // ...
+        alert('SignIn Successfully')
+        router.push('/')
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -81,6 +83,7 @@ const useFirebase = () => {
     signOut(auth)
       .then(() => {
         setUser({});
+        router.push('/')
       })
       .catch((error) => {
         // An error happened.
