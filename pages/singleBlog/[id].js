@@ -118,7 +118,7 @@ export default SingleBlog;
 
 export async function getServerSideProps({params}) {
 
-    const res = await axios.get(`http://localhost:3000/api/blog/${params.id}`)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/blog/${params.id}`)
 
     return {
       props: {

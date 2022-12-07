@@ -53,7 +53,7 @@ const Settings = () => {
   const {user} = useAuth();
 
     useEffect(() =>{
-        fetch(`http://localhost:3000/api/users`)
+        fetch(`${process.env.NEXT_PUBLIC_URL}/api/users`)
         .then(res => res.json())
         .then(totalUsers => {
             const newUser = totalUsers.filter(totalUser => totalUser.email === user.email)

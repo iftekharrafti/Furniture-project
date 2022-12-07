@@ -38,7 +38,7 @@ const HomeFurniture = () => {
   const [sortTrue, setSortTrue] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/product")
+    fetch(`${process.env.NEXT_PUBLIC_URL}/api/product`)
       .then((res) => res.json())
       .then((products) => {
         const homeOffice = products.filter(

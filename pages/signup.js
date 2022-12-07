@@ -101,7 +101,7 @@ const Signup = () => {
     }
     console.log(signUpData)
     try {
-      await axios.post('http://localhost:3000/api/users',signUpData )
+      await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/users`,signUpData )
       signUpData.fullName = signUpData.firstName + ' '+ signUpData.lastName
       await registerUser(signUpData.email, signUpData.password, signUpData.fullName);
       alert("user added successfully");

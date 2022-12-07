@@ -56,7 +56,7 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/blog")
+    fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog`)
       .then((res) => res.json())
       .then((data) => setBlogs(data));
   }, []);
