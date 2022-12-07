@@ -242,7 +242,7 @@ const Cart = () => {
                     </TableBody>
                   ))}
                   <tfoot>
-                    <tr sx={{ textAlign: "right" }}>
+                    <tr>
                       <Typography sx={{ p: 2 }} variant="h2" className={`title3 ${styles.title}`}>
                         Grand Total: ${total}.00
                       </Typography>

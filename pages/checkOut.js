@@ -5,11 +5,12 @@ import { useRouter } from 'next/router'
 const CheckOut = () => {
     const {user} = useAuth();
     const router = useRouter();
+    useEffect(() => {
+        if (!user.email) {
+            router.push('/signIn')
+        }
+    }, [user, router]);
 
-    if(!user.email){
-        router.push('/signIn')
-    }
-    
 
     return (
         <div>
