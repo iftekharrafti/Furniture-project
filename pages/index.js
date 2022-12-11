@@ -6,7 +6,8 @@ import Blogs from '../components/Blogs'
 import Products from '../components/Products'
 import SaleFurniture from '../components/SaleFurniture'
 
-export default function Home() {
+export default function Home({data}) {
+  console.log(data);
   return (
     <div>
       <Head>
@@ -19,7 +20,23 @@ export default function Home() {
       <ExtraProduct />
       <Products />
       <SaleFurniture />
-      <Blogs />
+      <Blogs blogs={data} />
+      
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const res = await fetch(`http://localhost:3000/api/blog`)
+  const data = await res.json()
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  }
 }
